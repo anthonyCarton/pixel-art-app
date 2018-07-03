@@ -1,9 +1,9 @@
 // Define Global Variables
 let gridColor = '#000000';
 let formInput = document.querySelector('#sizePicker');
-let pixelCanvas = document.querySelector('#pixelCanvas').firstElementChild;
-let pixels = document.querySelectorAll('td');
+let pixelCanvas = document.querySelector('#pixelCanvas > tbody');
 
+// Run on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
   // Add event listeners
   formInput.addEventListener('submit', function(event){
@@ -15,40 +15,31 @@ document.addEventListener('DOMContentLoaded', function() {
     let gridWidth = formInput.querySelector('input[name=width]').value;
 
     function makeGrid(n,m) {
-      // Define makeGrid variables
-      const ROW = '<tr></tr>';
-      const CELL = '<td></td>';
-
-      // TODO: remove all table children
-      console.log('clear table');
       pixelCanvas.innerHTML = '';
-
-      // set table to N x M, don't need to nest the loops
-
-      for (i = 0; i < n; i++) {
-        console.log('add row');
-        // add a <tr> element under table
-        //document.table.appendChild(ROW); // TODO better way to do this?
-        pixelCanvas.insertAdjacentHTML('beforeend', ROW);
+      console.log('table cleared');
+      for (i = 1; i <= n; i++) {
+        const ROW = document.createElement('tr');
+        pixelCanvas.appendChild(ROW);
+        console.log(`added row #${i}`);
         for (j = 0; j < m; j++) {
-          console.log('add cell');
-          // document.ROW.appendChild(CELL);
-          pixelCanvas.lastElementChild.insertAdjacentHTML('beforeend', CELL);
+          const CELL = document.createElement('td');
+          let pixelRow = pixelCanvas.lastElementChild;
+          pixelRow.appendChild(CELL);
+          console.log('added cell');
         }
       }
     }
     makeGrid(gridHeight, gridWidth);
 
-    // print to console to make sure this stuff is working
+    // print to console
     console.log(`h x w :: ${gridHeight} x ${gridWidth}`);
   });
 
-  pixels.addEventListener("click", function(event) {
+  pixelCanvas.addEventListener("click", function(event) {
     gridColor = document.querySelector('#colorPicker').value;
     console.log(`selected color is: ${gridColor}`);
-    event.currentTarget.style.backgroundColor=gridColor;
+    event.target.style.backgroundColor=gridColor;
   });
-
 
   // all code before this
 });
