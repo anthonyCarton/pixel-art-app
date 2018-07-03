@@ -4,40 +4,37 @@ document.addEventListener('DOMContentLoaded', function() {
   const ROW = document.createElement('tr');
   const CELL = document.createElement('td');
 
-  let sizePicker = document.getElementById('sizePicker');
-  let inputHeight = document.getElementById('inputHeight');
-  let inputWidth = document.getElementById('inputWidth');
-  let gridColor = document.getElementById('colorPicker');
-  let pixelCanvas = document.getElementById('pixelCanvas');
+  let pickSubmit = document.querySelector('input[type=submit]');
+  let gridColor = document.querySelector('#colorPicker');
+  let pixelCanvas = document.querySelector('#pixelCanvas');
 
   // Add event listeners
-  sizePicker.addEventListener('submit', function(event){
-    // prevent the page from refreshing
-    event.preventDefault(); //TODO is this right?
-    
+  pickSubmit.addEventListener('click', function(event){
     // Assign user input to variables
-    let gridHeight = inputHeight.value;
-    let gridWidth = inputWidth.value;
-    // call makeGrid function
+    let gridHeight = document.querySelector('#inputHeight').value;
+    let gridWidth = document.querySelector('#inputWidth').value;
+
+    function makeGrid(n,m) {
+      // remove all table children
+      document.getElementsByTagName('tbody'); //TODO replace empty()
+      // set table to N x M, don't need to nest the loops
+      for (i = 0; i < n; i++) {
+        // add a <tr> element under table
+        pixelCanvas.appendChild(ROW); // TODO better way to do this?
+      }
+      for (j = 0; j < m; j++) {
+        // document.getElementsByTagName('tr').appendChild(CELL);
+      }
+    }
+
     makeGrid(gridHeight, gridWidth);
+
     // print to console to make sure this stuff is working
     console.log("h x w :: " + gridHeight + " x " + gridWidth);
-  });
 
-  // Set the size of the cross stitch canvas
-  function makeGrid(n,m) {
-    // remove all table children
-    document.getElementsByTagName('tbody'); //TODO replace empty()
-    // set table to N x M, don't need to nest the loops
-    for (i = 0; i < n; i++) {
-      // add a <tr> element under table
-      pixelCanvas.appendChild(ROW); // TODO better way to do this?
-    }
-    for (j = 0; j < m; j++) {
-      // TODO no jq
-      // document.getElementsByTagName('tr').appendChild(CELL);
-    }
-  }
+    // prevent the page from refreshing
+    event.preventDefault();
+  });
 
   // set the cell to gridColor on <td> click using .on, because .click will not bind to dynamically created events
   pixelCanvas.addEventListener("click", function() {
