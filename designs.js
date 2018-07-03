@@ -1,12 +1,12 @@
 // Start only after DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
   // Define variables
-  const NEW_ROW = "<tr></tr>";
-  const NEW_CELL = "<td></td>";
+  const ROW = document.createElement('tr');
+  const CELL = document.createElement('td');
 
   let sizePicker = document.getElementById('sizePicker');
-  let gridHeight = document.getElementById('inputHeight');
-  let gridWidth = document.getElementById('inputWidth');
+  let inputHeight = document.getElementById('inputHeight');
+  let inputWidth = document.getElementById('inputWidth');
   let gridColor = document.getElementById('colorPicker');
   let pixelCanvas = document.getElementById('pixelCanvas');
 
@@ -14,9 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
   sizePicker.addEventListener('submit', function(event){
     // prevent the page from refreshing
     event.preventDefault(); //TODO is this right?
-    // assign gridHeight and gridWidth the val() of their respective form values.
-    gridHeight = inputHeight.val(); // TODO: What is the vJS equiv for .val()?
-    gridWidth = inputWidth.val();
+    
+    // Assign user input to variables
+    let gridHeight = inputHeight.value;
+    let gridWidth = inputWidth.value;
     // call makeGrid function
     makeGrid(gridHeight, gridWidth);
     // print to console to make sure this stuff is working
@@ -26,15 +27,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Set the size of the cross stitch canvas
   function makeGrid(n,m) {
     // remove all table children
-    document.getElementsByTagName('tbody').empty(); //TODO replace empty()
+    document.getElementsByTagName('tbody'); //TODO replace empty()
     // set table to N x M, don't need to nest the loops
     for (i = 0; i < n; i++) {
       // add a <tr> element under table
-      pixelCanvas.append(NEW_ROW); // TODO better way to do this?
+      pixelCanvas.appendChild(ROW); // TODO better way to do this?
     }
     for (j = 0; j < m; j++) {
       // TODO no jq
-      document.getElementsByTagName('tr').append( NEW_CELL.clone() );
+      // document.getElementsByTagName('tr').appendChild(CELL);
     }
   }
 
