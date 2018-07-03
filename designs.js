@@ -1,10 +1,10 @@
-// Start only after DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-  // Define Global Variables
-  let formInput = document.querySelector('#sizePicker');
-  let gridColor = document.querySelector('#colorPicker');
-  let pixelCanvas = document.querySelector('#pixelCanvas').firstElementChild;
+// Define Global Variables
+let gridColor = '#000000';
+let formInput = document.querySelector('#sizePicker');
+let pixelCanvas = document.querySelector('#pixelCanvas').firstElementChild;
+let pixels = document.querySelectorAll('td');
 
+document.addEventListener('DOMContentLoaded', function() {
   // Add event listeners
   formInput.addEventListener('submit', function(event){
     // prevent the page from refreshing
@@ -40,14 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
     makeGrid(gridHeight, gridWidth);
 
     // print to console to make sure this stuff is working
-    console.log("h x w :: " + gridHeight + " x " + gridWidth);
+    console.log(`h x w :: ${gridHeight} x ${gridWidth}`);
   });
 
-  // set the cell to gridColor on <td> click using .on, because .click will not bind to dynamically created events
-  //pixelCanvas.addEventListener("click", function() {
-    // $( this ).css( "background-color", gridColor.val()); <-- how do I do that w/o jq
-    //console.log("color changer is working: " + gridColor.val()); // use this to text
-  //});
+  pixels.addEventListener("click", function(event) {
+    gridColor = document.querySelector('#colorPicker').value;
+    console.log(`selected color is: ${gridColor}`);
+    event.currentTarget.style.backgroundColor=gridColor;
+  });
+
 
   // all code before this
 });
